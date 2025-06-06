@@ -1,0 +1,47 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background-image: url('/img/mesh-gradient.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.linkCustom {
+  color: var(--link-color);
+  font-weight: bold;
+  text-decoration: none;
+  /* transition: color 0.3s ease; */
+}
+
+.linkCustom:hover {
+  color: var(--link-hover-color);
+  text-decoration: none;
+}
+
+.home_icon {
+  color: var(--link-icon-color);
+}
+
+.home_icon:hover {
+  color: var(--ifm-color-primary-light);
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
