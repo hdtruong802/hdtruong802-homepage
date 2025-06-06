@@ -1,0 +1,12 @@
+---
+sidebar_position: 1
+---
+
+# Introduction
+
+Chào mừng bạn đến với **AI Corner** – nơi chia sẻ những kiến thức, trải nghiệm và khám phá thú vị xoay quanh thế giới trí tuệ nhân tạo (AI). Tại đây, bạn sẽ tìm thấy các bài viết được đầu tư kỹ lưỡng về các chủ đề như thị giác máy tính (Computer Vision), học sâu (Deep Learning), xử lý ngôn ngữ tự nhiên (NLP), và nhiều ứng dụng thực tiễn khác của AI trong đời sống và nghiên cứu.
+
+Nếu bạn là người yêu thích công nghệ, đang học tập hoặc làm việc trong lĩnh vực AI, hoặc đơn giản chỉ tò mò về lĩnh vực Trí tuệ nhân tạo, thì AI Corner là nơi dành cho bạn.
+
+## Contents
+<!-- 1. [Gaze Estimation: Từ ảnh 2D đến ánh nhìn 3D trong không gian](./Gaze%20Estimation) -->
