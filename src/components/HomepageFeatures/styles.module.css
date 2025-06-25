@@ -5,6 +5,43 @@
   width: 100%;
 }
 
+.link {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link:hover {
+  color: var(--ifm-color-primary-light);
+  text-decoration: underline;
+}
+
+.avatar {
+  width: 300px;       /* nhỏ hơn so với 200px cũ */
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.iconLinks {
+  display: flex;
+  justify-content: center;
+  gap: 24px;    /* tăng khoảng cách giữa các icon */
+  margin: 12px 0;
+}
+
+.iconLinks a {
+  color: var(--link-icon-color);
+  transition: transform 0.2s ease;
+}
+
+.iconLinks a:hover {
+  transform: scale(1.1);
+  color: var(--ifm-color-primary);
+}
+
 
 /* .featureSvg {
   width: 200px;

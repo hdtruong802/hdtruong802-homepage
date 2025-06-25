@@ -7,13 +7,12 @@ const sidebars = {
       id: 'intro',
       label: 'Introduction',
     },
+
     {
       type: 'category',
-      label: 'Fundamentals of Python and Structures',
+      label: 'Computer Vision',
       items: [
-        'Fundamentals of Python and Structures/Basic Python', 
-        'Fundamentals of Python and Structures/Data Structure',
-        'Fundamentals of Python and Structures/OOP with Python',
+        'Computer Vision/Gaze Estimation',
       ],
     },
   ],

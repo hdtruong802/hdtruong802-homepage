@@ -1,65 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaComments, FaTimes } from 'react-icons/fa';
+import '../css/chatbot.css';
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([
+    { sender: 'bot', text: 'Xin lỗi! Tôi vẫn đang trong quá trình phát triển.' }
+  ]);
+  const [inputValue, setInputValue] = useState('');
+  const messagesEndRef = useRef(null); // ref để scroll
+
+  const handleSendMessage = () => {
+    if (inputValue.trim() === '') return;
+
+    const userMessage = { sender: 'user', text: inputValue };
+    setMessages(prev => [...prev, userMessage]);
+
+    setTimeout(() => {
+      const botReply = { sender: 'bot', text: 'Xin lỗi! Tôi vẫn đang trong quá trình phát triển.' };
+      setMessages(prev => [...prev, botReply]);
+    }, 0);
+
+    setInputValue('');
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
+
+  // Auto scroll to bottom khi messages thay đổi
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
     <>
-      {/* Nút chatbot (luôn hiển thị) */}
       <button
-        onClick={() => setIsOpen(true)}
-        style={{
-          position: 'fixed',
-          bottom: 24,
-          right: 24,
-          backgroundColor: '#007bff',
-          borderRadius: '50%',
-          width: 56,
-          height: 56,
-          border: 'none',
-          color: 'white',
-          cursor: 'pointer',
-          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-          fontSize: 24,
-          zIndex: 1000,
-        }}
-        aria-label="Open Chatbot"
-        title="Open Chatbot"
+        onClick={() => setIsOpen(prev => !prev)}
+        className="chatbot-button"
+        aria-label="Toggle Chatbot"
+        title="Toggle Chatbot"
       >
         <FaComments />
       </button>
 
-      {/* Popup Chatbot */}
       {isOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            bottom: 90,
-            right: 24,
-            width: 320,
-            height: 400,
-            backgroundColor: 'white',
-            borderRadius: 8,
-            boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
-            display: 'flex',
-            flexDirection: 'column',
-            zIndex: 1001,
-          }}
-        >
-          <div
-            style={{
-              padding: '8px 12px',
-              backgroundColor: '#007bff',
-              color: 'white',
-              fontWeight: 'bold',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderTopLeftRadius: 8,
-              borderTopRightRadius: 8,
-            }}
-          >
+        <div className="chatbot-popup">
+          <div className="chatbot-header">
             Chatbot
             <button
               onClick={() => setIsOpen(false)}
@@ -76,30 +65,32 @@ export default function Chatbot() {
               <FaTimes />
             </button>
           </div>
-          <div
-            style={{
-              flex: 1,
-              padding: 12,
-              overflowY: 'auto',
-              fontSize: 14,
-              color: '#333',
-            }}
-          >
-            {/* Nội dung chat, bạn có thể thêm input, message, logic bot ở đây */}
-            <p>Feature in development. Coming soon ...</p>
+          <div className="chatbot-messages">
+            {messages.map((msg, index) => (
+              <div key={index} style={{ margin: '4px 0', textAlign: msg.sender === 'user' ? 'right' : 'left' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    padding: '6px 10px',
+                    borderRadius: 12,
+                    backgroundColor: msg.sender === 'user' ? 'var(--ifm-color-primary)' : '#f1f1f1',
+                    color: msg.sender === 'user' ? 'white' : 'black',
+                    maxWidth: '80%',
+                  }}
+                >
+                  {msg.text}
+                </span>
+              </div>
+            ))}
+            <div ref={messagesEndRef} /> {/* Auto scroll đến đây */}
           </div>
-          <div style={{ padding: 8, borderTop: '1px solid #ddd' }}>
+          <div className="chatbot-input">
             <input
               type="text"
               placeholder="Type a message..."
-              style={{
-                width: '100%',
-                padding: '8px',
-                boxSizing: 'border-box',
-                borderRadius: 4,
-                border: '1px solid #ccc',
-              }}
-              // bạn thêm logic gửi tin nhắn vào đây
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
           </div>
         </div>

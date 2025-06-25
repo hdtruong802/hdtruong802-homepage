@@ -16,23 +16,7 @@ function HomepageHeader() {
           {siteConfig.title}
         </Heading>
         <p className="hero__subtitle">
-          {siteConfig.tagline}
-          <br />
-          <a href="#duc-truong-hoang" className={styles.linkCustom}>
-            Duc-Truong Hoang
-          </a>,&nbsp;
-          <a href="#minh-le" className={styles.linkCustom}>
-            Minh Le
-          </a>,&nbsp;
-          <a href="#trong-nghia-ha-le" className={styles.linkCustom}>
-            Trong-Nghia Ha Le
-          </a>,&nbsp;
-          <a href="#tung-lam-pham" className={styles.linkCustom}>
-            Tung-Lam Pham
-          </a>,&nbsp;
-          <a href="#huu-phuoc-le" className={styles.linkCustom}>
-            Huu-Phuoc Le
-          </a>
+          "{siteConfig.tagline}"
         </p>
       </div>
     </header>
