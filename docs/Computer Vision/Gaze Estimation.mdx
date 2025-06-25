@@ -68,15 +68,15 @@ Tập dữ liệu này bao gồm:
 **Xác định gaze vector 3D**
 
 Xác định hướng ánh nhìn của người trong không gian 3D (hệ tọa độ toàn cục):
-- Tọa độ mắt người trong không gian (global): $\vec{\text{e}} = (x_{e}, y_{e}, z_{e})$
-- Tọa độ điểm nhìn trong không gian (global): $\vec{\text{t}} = (x_{t}, y_{t}, z_{t})$
-- Gaze vector 3D: $\vec{{\text{g}}}_{global} = (x_{t} - x_{e}, y_{t} - y_{e}, z_{t} - z_{e})$
+- Tọa độ mắt người trong không gian (global): $\vec{e} = (x_{e}, y_{e}, z_{e})$
+- Tọa độ điểm nhìn trong không gian (global): $\vec{t} = (x_{t}, y_{t}, z_{t})$
+- Gaze vector 3D: $\vec{g}_{global} = (x_{t} - x_{e}, y_{t} - y_{e}, z_{t} - z_{e})$
 
 **Chuẩn hóa gaze vector 3D thành vector đơn vị**
 
 - Gaze vector chuẩn hóa:<br /> 
 <div style={{ textAlign: "center", fontSize: "1.2rem" }}>
-$$\hat{\text{g}}_{global} = \tfrac{\vec{\text{g}}_{global}}{\left\| \vec{\text{g}}_{global} \right\|}$$
+$\hat{g}_{global} = \frac{\vec{g}_{global}}{||\vec{g}_{global}||}$
 </div>
 
 **Chuyển hệ tọa độ gaze vector**
@@ -84,12 +84,12 @@ $$\hat{\text{g}}_{global} = \tfrac{\vec{\text{g}}_{global}}{\left\| \vec{\text{g
 - Ma trận chuyển đổi hệ tọa độ: M
 - Chuyển vector gaze từ global coord → eye coord:<br />
 <div style={{ textAlign: "center", fontSize: "1.2rem" }}> 
-$$\hat{\text{g}}_{\text{eye}} = M \cdot \hat{\text{g}}_{\text{global}}$$
+$$\hat{g}_{eye} = M \cdot \hat{g}_{global}$$
 </div>
 
 **Tính ma trận chuyển đổi M**
 
-- Vector hướng ra phía trước trong global coord: $\vec{\text{u}} = (0, 0, 1)$
+- Vector hướng ra phía trước trong global coord: $\vec{u} = (0, 0, 1)$
 - Trục Ez là vector từ camera đến mắt:<br /> 
 <div style={{ textAlign: "center", fontSize: "1.2rem" }}> 
 $$\vec{z} = \frac{\vec{e}}{\|\vec{e}\|}$$
@@ -107,7 +107,7 @@ $$\vec{y} = \vec{z} \times \vec{x}$$
 
 - Ma trận chuyển đổi M:<br />
 <div style={{ textAlign: "center", fontSize: "1.2rem" }}>
-$\text{M} = \begin{bmatrix}
+$M = \begin{bmatrix}
 \vec{x}^{T} \\
 \vec{y}^{T} \\
 \vec{z}^{T}
@@ -125,10 +125,10 @@ Việc tái tạo ánh nhìn 3D từ các góc yaw và pitch được dự đoá
 
 <div style={{ textAlign: "center", fontSize: "1.2rem" }}>
 $$
-\text{v} = \begin{bmatrix}
-\cos\text{(pitch)} . \sin\text{(yaw)} \\
-\sin\text{(pitch)} \\
-\cos\text{(pitch)} . \cos\text{(yaw)}
+v = \begin{bmatrix}
+\cos(pitch) \cdot \sin(yaw) \\
+\sin(pitch) \\
+\cos(pitch) \cdot \cos(yaw)
 \end{bmatrix}
 $$
 </div>
@@ -155,7 +155,7 @@ Trong thực tế, camera có thể không đặt vuông góc với người [(*
 
 <div style={{ textAlign: "center", fontSize: "1.2rem" }}>
 $$
-\text{R}_{\text{x}}(\beta) = \begin{bmatrix}
+R_x(\beta) = \begin{bmatrix}
 1 & 0 & 0 \\
 0 & \cos\beta & -\sin\beta \\
 0 & \sin\beta & \cos\beta

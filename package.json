@@ -31,7 +31,8 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.8.0",
-    "@docusaurus/types": "3.8.0"
+    "@docusaurus/types": "3.8.0",
+    "cross-env": "^7.0.3"
   },
   "browserslist": {
     "production": [

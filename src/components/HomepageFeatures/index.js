@@ -28,18 +28,18 @@ export default function Portfolio() {
     ],
     workExperience: [
       {
-        position: 'Football Analyst',
-        company: 'BEPRO',
-        companyLink: 'https://www.bepro.ai/',
-        year: 'September 2024 - March 2025',
-        description: 'Analyze football matches in detail and annotate specific events (such as passes, shots, tackles, etc.) to create datasets for AI processing to produce technical statistics for the match and individual players.'
-      },
-      {
         position: 'AI Intern',
         company: 'FPT Software',
         companyLink: 'https://fptsoftware.com/',
         year: 'April 2025 - Present',
         description: 'Participated in the development and implementation of AI models, focusing on Computer Vision, for real-world projects.'
+      },
+      {
+        position: 'Football Analyst',
+        company: 'BEPRO',
+        companyLink: 'https://www.bepro.ai/',
+        year: 'September 2024 - March 2025',
+        description: 'Analyze football matches in detail and annotate specific events (such as passes, shots, tackles, etc.) to create datasets for AI processing to produce technical statistics for the match and individual players.'
       }
     ],
     awards: [
