@@ -6,8 +6,8 @@ import rehypeKatex from 'rehype-katex';
 /** @type {import('@docusaurus/types').Config} */
 
 const config = {
-  title: 'Unlock the Future of Artificial Intelligence',
-  tagline: 'AIO 2025',
+  title: 'Duc-Truong Hoang',
+  tagline: "What doesn't kill you makes you stronger",
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -19,12 +19,12 @@ const config = {
   url: 'https://hdtruong802.github.io/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/AIO-Conquer-2025/',
+  baseUrl: '/Hoang-Duc-Truong/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'hdtruong802', // Usually your GitHub org/user name.
-  projectName: 'AIO-Conquer-2025', // Usually your repo name.
+  projectName: 'Hoang-Duc-Truong', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -69,31 +69,19 @@ const config = {
     ],
   ],
 
-  plugins: [
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'projects',
-        path: 'projects', // thư mục chứa docs của projects
-        routeBasePath: 'projects', // URL base cho tab projects
-        sidebarPath: require.resolve('./sidebarsProjects.js'),
-        remarkPlugins: [remarkMath],
-        rehypePlugins: [rehypeKatex],
-      },
-    ],
-
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'AICorner',
-        path: 'AI Corner', // thư mục chứa docs của projects
-        routeBasePath: 'aicorner', // URL base cho tab projects
-        sidebarPath: require.resolve('./sidebarsAICorner.js'),
-        remarkPlugins: [remarkMath],
-        rehypePlugins: [rehypeKatex],
-      },
-    ],
-  ],
+  // plugins: [
+  //   [
+  //     '@docusaurus/plugin-content-docs',
+  //     {
+  //       id: 'blog',
+  //       path: 'blog', // thư mục chứa docs của projects
+  //       routeBasePath: 'blog', // URL base cho tab projects
+  //       sidebarPath: require.resolve('./sidebarsBlog.js'),
+  //       remarkPlugins: [remarkMath],
+  //       rehypePlugins: [rehypeKatex],
+  //     },
+  //   ],
+  // ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -104,7 +92,7 @@ const config = {
         title: '',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/aio_logo.png',
+          src: 'img/HDT_logo.jpg',
         },
         items: [
           {
@@ -118,27 +106,21 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'docSidebar',
             position: 'left',
-            label: 'Knowledge',
+            label: 'Blog',
           },
 
-          {
-            to: '/projects/intro',
-            position: 'left',
-            label: 'Projects',
-          },
-
-          {
-            to: '/aicorner/intro',
-            position: 'left',
-            label: 'AI Corner',
-          },
+          // {
+          //   to: '/blog/intro',
+          //   position: 'left',
+          //   label: 'Blog',
+          // },
 
           {
             type: 'localeDropdown',
             position: 'right',
           },
           {
-            href: 'https://github.com/hdtruong802/Blogweb-AIO-2025',
+            href: 'https://github.com/hdtruong802/AIO-Conquer-2025',
             label: 'GitHub',
             position: 'right',
           },
@@ -187,7 +169,7 @@ const config = {
         //     ],
         //   },
         // ],
-        copyright: `Copyright © ${new Date().getFullYear()} AIO Conquer. All rights reserved.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Hoang Duc Truong. All rights reserved.`,
       },
       prism: {
         theme: prismThemes.github,

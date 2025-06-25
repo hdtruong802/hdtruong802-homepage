@@ -1,0 +1,187 @@
+/* Định nghĩa các biến CSS cho màu sắc để dễ dàng quản lý */
+:root {
+  /* Light Theme Colors */
+  --chatbot-button-background-color: #000000;
+  --chatbot-button-color: #ffffff;
+  --chatbot-hover-color: #000000;
+
+  --chatbot-primary-color-light: #007bff; /* Ví dụ: Màu xanh dương chủ đạo của trang web */
+  --chatbot-background-light: #FFFFFF;
+  --chatbot-text-color-light: #333333;
+  --chatbot-message-bg-chatbot-light: #F0F0F0;
+  --chatbot-message-bg-user-light: #E1F5FE;
+  --chatbot-border-color-light: #ddd;
+  --chatbot-close-button-color-light: #CCCCCC;
+}
+
+[data-theme='dark'] {
+  /* Dark Theme Colors */
+  --chatbot-button-background-color: #ffffff;
+  --chatbot-button-color: #000000;
+  --chatbot-primary-color-dark: #61DAFB; /* Ví dụ: Một sắc độ xanh sáng hơn cho Dark Theme */
+  --chatbot-background-dark: #282C34; /* Nền chatbot trong dark theme */
+  --chatbot-text-color-dark: #F0F0F0;
+  --chatbot-message-bg-chatbot-dark: #3A3F4A;
+  --chatbot-message-bg-user-dark: #0A6C7B;
+  --chatbot-border-color-dark: #444444; /* Màu đường viền input trong dark theme */
+  --chatbot-close-button-color-dark: #999999;
+}
+
+
+.chatbot-button {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  /* Sử dụng --ifm-color-primary từ Docusaurus nếu muốn nút này theo màu primary chung */
+  /* Hoặc sử dụng màu riêng cho chatbot button */
+  background-color: var(--chatbot-button-background-color); /* Đảm bảo --ifm-color-primary đã được định nghĩa và thay đổi theo theme */
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  border: none;
+  color: var(--chatbot-button-color); /* Màu icon/chữ trên nút */
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  font-size: 24px;
+  z-index: 1000;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chatbot-button:hover {
+  background-color: var(--ifm-color-primary-light);
+  transform: translateY(-6px); /* Di chuyển lên 6px */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.chatbot-popup {
+  position: fixed;
+  bottom: 150px;
+  right: 24px;
+  width: 320px;
+  height: 400px;
+  background-color: var(--chatbot-background-light); /* Light theme default */
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
+}
+
+[data-theme='dark'] .chatbot-popup {
+  background-color: var(--chatbot-background-dark); /* Dark background */
+  color: var(--chatbot-text-color-dark); /* Default text color for dark theme popup */
+}
+
+.chatbot-header {
+  padding: 8px 12px;
+  background-color: var(--ifm-color-primary); /* Light theme default */
+  color: white; /* Header text color */
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+[data-theme='dark'] .chatbot-header {
+  background-color: var(--ifm-color-primary); /* Dark theme header color */
+}
+
+/* Close button - bạn có thể thêm class cho nút này nếu muốn style riêng */
+.chatbot-header button { /* Giả định nút đóng là một button bên trong header */
+    background: none;
+    border: none;
+    color: var(--chatbot-close-button-color-light); /* Default light theme */
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1; /* Để căn chỉnh dấu X tốt hơn */
+}
+
+[data-theme='dark'] .chatbot-header button {
+    color: var(--chatbot-close-button-color-dark); /* Dark theme close button */
+}
+
+
+.chatbot-messages {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+  font-size: 14px;
+  color: var(--chatbot-text-color-light); /* Light theme default text color */
+}
+
+[data-theme='dark'] .chatbot-messages {
+  color: var(--chatbot-text-color-dark); /* Dark theme text color */
+}
+
+/* Cần thêm CSS cho bong bóng chat (message bubbles) */
+.chatbot-message {
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.chatbot-message.chatbot-response { /* Tin nhắn từ chatbot */
+  background-color: var(--chatbot-message-bg-chatbot-light);
+  align-self: flex-start; /* Nếu bạn dùng flex-direction: column và align-items */
+}
+
+[data-theme='dark'] .chatbot-message.chatbot-response {
+  background-color: var(--chatbot-message-bg-chatbot-dark);
+}
+
+.chatbot-message.user-message { /* Tin nhắn của người dùng */
+  background-color: var(--chatbot-message-bg-user-light);
+  color: var(--chatbot-text-color-light); /* Có thể giữ màu chữ đen cho tin nhắn người dùng nếu nền đủ sáng */
+  align-self: flex-end; /* Nếu bạn dùng flex-direction: column và align-items */
+  margin-left: auto; /* Đẩy tin nhắn sang phải */
+}
+
+[data-theme='dark'] .chatbot-message.user-message {
+  background-color: var(--chatbot-message-bg-user-dark);
+  color: var(--chatbot-text-color-dark); /* Màu chữ trắng cho tin nhắn người dùng trên nền tối */
+}
+
+
+.chatbot-input {
+  padding: 8px;
+  border-top: 1px solid var(--chatbot-border-color-light); /* Light theme default */
+}
+
+[data-theme='dark'] .chatbot-input {
+  border-top: 1px solid var(--chatbot-border-color-dark); /* Dark theme border */
+}
+
+.chatbot-input input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid var(--chatbot-border-color-light); /* Light theme default */
+  background-color: var(--chatbot-background-light); /* Nền input trong light theme */
+  color: var(--chatbot-text-color-light); /* Text color in light theme input */
+}
+
+[data-theme='dark'] .chatbot-input input {
+  border: 1px solid var(--chatbot-border-color-dark); /* Dark theme border */
+  background-color: var(--chatbot-background-dark); /* Nền input trong dark theme (có thể dùng màu nền pop-up hoặc đậm hơn) */
+  color: var(--chatbot-text-color-dark); /* Text color in dark theme input */
+}
+
+/* Styling cho nút gửi */
+.chatbot-input button { /* Giả định có một nút gửi bên cạnh input */
+  background-color: var(--chatbot-primary-color-light);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+[data-theme='dark'] .chatbot-input button {
+  background-color: var(--chatbot-primary-color-dark);
+}

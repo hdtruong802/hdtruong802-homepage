@@ -1,0 +1,253 @@
+---
+sidebar_position: 2
+hide_title: true
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+<h1 align="center">Gaze Estimation: Từ ảnh 2D đến ánh nhìn 3D trong không gian</h1>
+<h3 align="center"><a href={useBaseUrl('/#duc-truong-hoang')}>Duc-Truong Hoang</a></h3>
+
+## 1. Gaze Estimation là gì?
+
+<div align="center">
+<img src={useBaseUrl('/img/gaze-estimation/overview.jpg')} alt="Overview" style={{ width: "80%" }} /><br />  
+<em>Hình 1: Minh họa Gaze Estimation</em>
+</div>
+
+Chỉ từ một tấm ảnh, làm sao để biết một người đang nhìn vào đâu trong không gian thực? Đó chính là câu hỏi cốt lõi của **Gaze Estimation** – một nhánh của thị giác máy tính chuyên nghiên cứu và giải mã hướng nhìn của con người.
+
+Khả năng ước lượng hướng nhìn mở ra vô vàn tiềm năng ứng dụng thực tiễn, từ việc theo dõi sự chú ý trong nghiên cứu hành vi và tương tác người-máy (HCI), đến việc nâng cao an toàn khi lái xe, hỗ trợ trong chăm sóc sức khỏe, và cải thiện trải nghiệm trong các môi trường thực tế ảo (VR/AR).
+
+Tuy nhiên, đây không phải là một bài toán đơn giản. Trong môi trường thực tế, các yếu tố như ánh sáng phức tạp, chuyển động đầu, góc quay khuôn mặt, hay chất lượng camera đều có thể gây sai lệch đáng kể. Thêm vào đó, ánh mắt con người tồn tại trong không gian 3 chiều (3D), trong khi hình ảnh thu được từ camera chỉ là 2 chiều (2D). Điều này đặt ra một thách thức kỹ thuật lớn: **làm thế nào để chuyển đổi chính xác từ dữ liệu ảnh 2D sang ước lượng ánh nhìn 3D trong thế giới thực?**
+
+Trong bài viết này, chúng ta sẽ đi sâu vào một phương pháp tiếp cận hiện đại và hiệu quả cho bài toán Gaze Estimation, tìm hiểu thông qua hai phần sau:
+- [**Gaze 360**](#2-tập-dữ-liệu-gaze360): Một tập dữ liệu tiêu biểu trong việc huấn luyện các mô hình ước lượng ánh nhìn 3D.
+- [**3D Gaze Reconstruction**](#3-3d-gaze-reconstruction): Phương pháp chuyển đổi kết quả dự đoán từ các mô hình đã được huấn luyện trên Gaze360 thành vector ánh nhìn chính xác trong không gian thực.
+
+Thông qua việc phân tích cách hai thành phần này hoạt động, bạn sẽ có được cái nhìn sâu sắc về cách một hệ thống thị giác máy tính có thể xác định được điểm nhìn của một người – chỉ dựa trên một bức ảnh.
+
+## 2. Tập dữ liệu Gaze360
+
+Một trong những yếu tố quan trọng nhất để huấn luyện các mô hình gaze estimation là dữ liệu chất lượng: vừa đa dạng, vừa chính xác. Trong bài viết này, chúng ta sẽ cùng tìm hiểu về **Gaze360**, một tập dữ liệu nổi bật bởi khả năng mô phỏng ánh nhìn của con người trong không gian ba chiều một cách linh hoạt và thực tế.
+
+### 2.1. Tổng quan
+
+**Gaze360** là một tập dữ liệu đột phá, được công bố vào năm 2019 bởi nhóm nghiên cứu từ MIT (Massachusetts Institute of Technology) và Toyota Research Institute [[1](#1), [2](#2)]. Mục tiêu chính của Gaze360 là cung cấp dữ liệu ánh nhìn trong môi trường tự nhiên (in-the-wild) mà không bị giới hạn về góc nhìn.<br />
+Tập dữ liệu này bao gồm:
+- 197,588 ảnh crop khuôn mặt từ 238 cá nhân, được thu thập trong nhiều bối cảnh đa dạng, cả trong nhà lẫn ngoài trời, sử dụng camera Ladybug5.
+- Mỗi ảnh được gán nhãn bằng một vector ánh nhìn 3D trong hệ tọa độ toàn cục (Ladybug / Global Coordinate System) và đi kèm với thông tin về độ tin cậy (confidence).
+
+Để hỗ trợ quá trình học của mô hình, nhóm nghiên cứu đã áp dụng phép chiếu Mollweide [(*Hình 2*)](#mollweide-img) để chuyển đổi các nhãn. Phép chiếu này giúp phân bố các nhãn vector ánh nhìn 3D theo góc quay yaw (ngang) và pitch (dọc) (tính bằng radian) trong hệ tọa độ mắt người (Eye-Centered Coordinate System), giúp các mô hình học máy dễ dàng nắm bắt và xử lý dữ liệu hơn.
+
+
+<div align="center">
+<img id="mollweide-img" src={useBaseUrl('/img/gaze-estimation/mollweide.jpg')} alt="Overview" style={{ width: "80%" }} /><br />  
+<em>Hình 2: Minh họa phân bố nhãn dữ liệu</em>
+</div>
+
+### 2.2. Các hệ trục tọa độ 3D
+
+<div align="center">
+<img id="coordinates-img" src={useBaseUrl('/img/gaze-estimation/coordinates.jpg')} alt="Overview" style={{ width: "80%" }} /><br />  
+<em>Hình 3: Minh họa các hệ trục tọa độ 3D</em>
+</div>
+
+**Hệ tọa độ toàn cục (Ladybug / Global Coordinate System)** [(*Hình 3b*)](#coordinates-img) là hệ tọa độ gắn với camera Ladybug (multi-view), được sử dụng trong quá trình thu thập dữ liệu.
+- Gốc tọa độ đặt tại trung tâm camera.
+- Trục Lz hướng từ camera ra phía trước.
+- Trục Lx vuông góc với trục Lz, hướng sang phải.
+- Trục Ly vuông góc với cả trục Lz và Lx, hướng lên trên.
+
+**Hệ tọa độ mắt người (Eye-Centered Coordinate System)** [(*Hình 3b*)](#coordinates-img) là hệ tọa độ cục bộ nơi mà các nhãn hướng nhìn (gaze vector 3D labels) đã được chuyển đổi.
+- Gốc tọa độ tại vị trí trung tâm giữa hai mắt người.
+- Trục Ez hướng ánh nhìn (chiều từ camera đến mắt người).
+- Trục Ex vuông góc với trục Ez, hướng sang phải của người .
+- Trục Ey vuông góc với cả trục Ez và Ex, hướng lên trên.
+
+### 2.3. Chuyển hệ tọa độ toàn cục sang hệ tọa độ mắt người
+**Xác định gaze vector 3D**
+
+Xác định hướng ánh nhìn của người trong không gian 3D (hệ tọa độ toàn cục):
+- Tọa độ mắt người trong không gian (global): $\vec{\text{e}} = (x_{e}, y_{e}, z_{e})$
+- Tọa độ điểm nhìn trong không gian (global): $\vec{\text{t}} = (x_{t}, y_{t}, z_{t})$
+- Gaze vector 3D: $\vec{{\text{g}}}_{global} = (x_{t} - x_{e}, y_{t} - y_{e}, z_{t} - z_{e})$
+
+**Chuẩn hóa gaze vector 3D thành vector đơn vị**
+
+- Gaze vector chuẩn hóa:<br /> 
+<div style={{ textAlign: "center", fontSize: "1.2rem" }}>
+$$\hat{\text{g}}_{global} = \tfrac{\vec{\text{g}}_{global}}{\left\| \vec{\text{g}}_{global} \right\|}$$
+</div>
+
+**Chuyển hệ tọa độ gaze vector**
+
+- Ma trận chuyển đổi hệ tọa độ: M
+- Chuyển vector gaze từ global coord → eye coord:<br />
+<div style={{ textAlign: "center", fontSize: "1.2rem" }}> 
+$$\hat{\text{g}}_{\text{eye}} = M \cdot \hat{\text{g}}_{\text{global}}$$
+</div>
+
+**Tính ma trận chuyển đổi M**
+
+- Vector hướng ra phía trước trong global coord: $\vec{\text{u}} = (0, 0, 1)$
+- Trục Ez là vector từ camera đến mắt:<br /> 
+<div style={{ textAlign: "center", fontSize: "1.2rem" }}> 
+$$\vec{z} = \frac{\vec{e}}{\|\vec{e}\|}$$
+</div>
+
+- Trục Ex là vector vuông góc với Ez, hướng sang phải:<br />
+<div style={{ textAlign: "center", fontSize: "1.2rem" }}> 
+$$\vec{x} = \frac{\vec{u} \times \vec{z}}{\|\vec{u} \times \vec{z}\|}$$
+</div>
+
+- Trục Ey là vector vuông góc với Ex và Ez:<br />
+<div style={{ textAlign: "center", fontSize: "1.2rem" }}> 
+$$\vec{y} = \vec{z} \times \vec{x}$$
+</div>
+
+- Ma trận chuyển đổi M:<br />
+<div style={{ textAlign: "center", fontSize: "1.2rem" }}>
+$\text{M} = \begin{bmatrix}
+\vec{x}^{T} \\
+\vec{y}^{T} \\
+\vec{z}^{T}
+\end{bmatrix}$
+</div>
+
+## 3. 3D Gaze Reconstruction
+
+### 3.1. Tổng quan
+Các mô hình gaze estimation hiện đại thường được huấn luyện trên tập dữ liệu Gaze360, với mục tiêu dự đoán góc yaw và pitch của ánh nhìn trong hệ tọa độ mắt người. Tuy nhiên, để chuyển đổi kết quả dự đoán này thành vector ánh nhìn 3D trong không gian thực, chúng ta cần thực hiện một số bước bổ sung.
+Việc tái tạo ánh nhìn 3D từ các góc yaw và pitch được dự đoán là một quá trình quan trọng, giúp mô hình có thể áp dụng trong các tình huống thực tế như phân tích vùng chú ý hay xác định đối tượng hoặc vị trí mà một người đang nhìn.
+
+### 3.2. Quy trình tái tạo ánh nhìn 3D
+**Chuyển đổi góc thành gaze vector 3D** [[3](#3)]
+
+<div style={{ textAlign: "center", fontSize: "1.2rem" }}>
+$$
+\text{v} = \begin{bmatrix}
+\cos\text{(pitch)} . \sin\text{(yaw)} \\
+\sin\text{(pitch)} \\
+\cos\text{(pitch)} . \cos\text{(yaw)}
+\end{bmatrix}
+$$
+</div>
+
+- v: vector ánh nhìn 3D trong hệ tọa độ mắt người (Eye-Centered Coordinate System).
+- yaw: góc xoay ngang (horizontal angle) của ánh nhìn, tính bằng radian.
+- pitch: góc xoay dọc (vertical angle) của ánh nhìn, tính bằng radian.
+
+```python
+# Hàm chuyển đổi từ pitch, yaw sang gaze vector 3D
+import numpy as np
+
+def pitchyaw_to_vector(pitch, yaw):
+    x = np.cos(pitch) * np.sin(yaw)
+    y = np.sin(pitch)
+    z = np.cos(pitch) * np.cos(yaw)
+    gaze_vector = np.array([x, y, z])
+    return gaze_vector
+```
+
+**Tính ma trận xoay** [[4](#4)]
+
+Trong thực tế, camera có thể không đặt vuông góc với người [(*Hình 4*)](#beta-img), do đó cần tính toán ma trận xoay để chuyển đổi tọa độ mắt người từ tọa độ thực tế (World Coordinate System) sang hệ tọa độ camera (Global Coordinate System):
+
+<div style={{ textAlign: "center", fontSize: "1.2rem" }}>
+$$
+\text{R}_{\text{x}}(\beta) = \begin{bmatrix}
+1 & 0 & 0 \\
+0 & \cos\beta & -\sin\beta \\
+0 & \sin\beta & \cos\beta
+\end{bmatrix}
+$$
+</div><br />
+
+```python
+# Hàm ma trận xoay quanh trục x
+def rotation_matrix(beta):
+    Rx = np.array([
+        [1, 0, 0],
+        [0, np.cos(beta), -np.sin(beta)],
+        [0, np.sin(beta), np.cos(beta)]
+    ])
+    return Rx
+```
+
+**Thực tế thường camera sẽ được gắn trên cao chúc xuống để ghi hình, trong trường hợp này cần xoay lại góc $$-β$$.*
+
+**Tính góc $$β$$**
+
+<div style={{ textAlign: "center", fontSize: "1.2rem" }}>
+$\tan (\beta) = \tfrac{h_{c} - h_{e}}{z}$
+</div>
+
+- $$h_{c}$$: chiều cao của camera so với mặt đất.
+- $$h_{e}$$: chiều cao của mắt người so với mặt đất.
+- $$z$$: khoảng cách (hình chiếu lên mặt đất) từ camera đến mắt người trong thực tế.
+
+<div align="center">
+<img id="beta-img" src={useBaseUrl('/img/gaze-estimation/beta.jpg')} alt="Overview" style={{ width: "50%" }} /><br />  
+<em>Hình 4: Mô tả các khoảng cách</em>
+</div>
+
+```python
+# Hàm tính góc beta từ chiều cao camera, chiều cao mắt và khoảng cách z
+def calculate_beta(camera_height, eye_height, z):
+    beta = np.arctan((camera_height - eye_height) / z)
+    return beta
+```
+**Có thể tính $$z$$ trong thực tế bằng cách áp dụng [Homography Matrix](https://docs.opencv.org/4.x/d9/dab/tutorial_homography.html)*
+
+**Vị trí của mắt trong hệ tọa độ camera**
+```python
+# Hàm chuyển tọa độ vị trí mắt thực tế sang hệ tọa độ camera
+def get_eye_pos_camera(RX, eye_pos_world, camera_height):
+    _, eye_height, _ = eye_pos_world
+    T = np.array([0, - (camera_height - eye_height), 0])
+    eye_pos_camera = Rx @ (eye_pos_world - T)
+    return eye_pos_camera
+```
+
+**Ma trận chuyển đổi**
+```python
+# Hàm tính ma trận chuyển đổi từ hệ tọa độ mắt sang hệ tọa độ camera
+def transform_matrix(self, person_pos_camera):
+    zAxis = person_pos_camera / np.linalg.norm(person_pos_camera)
+    upVector = np.array([0, 0, 1], dtype=np.float32) 
+    xAxis = np.cross(upVector, zAxis)        
+    xAxis /= np.linalg.norm(xAxis) 
+    yAxis = np.cross(zAxis, xAxis) 
+    M = np.stack([xAxis, yAxis, zAxis], axis=0)
+    return M
+```
+
+**Chuyển vector từ hệ tọa độ mắt người sang hệ tọa độ camera**
+```python
+# Hàm chuyển đổi gaze vector từ hệ tọa độ mắt sang hệ tọa độ camera
+def gaze_vector_to_camera(gaze_vector, M):
+    gaze_vector_camera = M.T @ gaze_vector
+    return gaze_vector_camera
+```
+
+
+<p align="right"><em>Latest update: 11/06/2025</em></p>
+
+***
+
+## Tài liệu tham khảo
+<div id="1">
+[**[1]** &nbsp;Petr Kellnhofer, Adria Recasens, Simon Stent, Wojciech Matusik, Antonio Torralba (2019). **Gaze360: Physically Unconstrained Gaze Estimation in the Wild**. *IEEE International Conference on Computer Vision (ICCV)*.](https://arxiv.org/abs/1910.10088#:~:text=In%20this%20work%2C%20we%20present%20Gaze360%2C%20a%20large-scale,a%20wide%20range%20of%20head%20poses%20and%20distances.)
+</div>
+
+<div id="2">
+[**[2]** &nbsp;Petr Kellnhofer, Adria Recasens, Simon Stent, Wojciech Matusik, Antonio Torralba (2019). **Gaze360: Physically Unconstrained Gaze Estimation in the Wild (Supplemental)**.](https://github.com/erkil1452/gaze360/blob/master/OpenGaze__ICCV_2019_Sup_.pdf)
+</div>
+
+<div id="3">
+[**[3]** &nbsp;Ahmed A.Abdelrahman, Thorsten Hempel, Aly Khalifa, Ayoub Al-Hamadi (2022). **L2CS-Net: Fine-Grained Gaze Estimation in Unconstrained Environments**. *IEEE International Conference on Image Processing (ICIP)*.](https://arxiv.org/abs/2203.03339)
+</div>
+
+<div id="4">
+[**[4]** &nbsp;Wikipedia contributors. **Rotation matrix**. *Wikipedia, The Free Encyclopedia*.](https://en.wikipedia.org/wiki/Rotation_matrix)
+</div>

@@ -8,6 +8,8 @@
   --link-color: #111f68; 
   --link-hover-color: #000000;
   --link-icon-color: #000000;
+  --footer-background-color: #000000;
+  --footer-color: #ffffff;
 
   --ifm-color-primary: #6c63ff;              /* Galaxy Purple */
   --ifm-color-primary-dark: #5a52e0;          /* Deeper Purple */
@@ -27,6 +29,8 @@
   --link-color: #000000;          /* trắng */
   --link-hover-color: #111f68;
   --link-icon-color: #ffffff; 
+  --footer-background-color: #ffffff;
+  --footer-color: #000000;
 
   --ifm-color-primary: #8d85ff;              /* More glowing in dark */
   --ifm-color-primary-dark: #7c74ff;
@@ -38,6 +42,12 @@
   --ifm-color-primary-lightest: #e0dfff;
 
   --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.1); /* Soft nebula highlight */
+}
+
+.navbar__logo img {
+  height: 100px; /* hoặc 50px, 60px tùy bạn muốn */
+  width: auto; /* giữ tỷ lệ gốc */
+  margin-top: -30px;
 }
 
 .navbar__icon-link svg {
@@ -58,4 +68,10 @@
 
 .katex-html {
   display: none !important;
+}
+
+.footer {
+  background-color: var(--footer-background-color);
+  color: var(--footer-color);
+  padding: 1rem;
 }
