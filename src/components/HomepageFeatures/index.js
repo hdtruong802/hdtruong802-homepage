@@ -28,10 +28,10 @@ export default function Portfolio() {
     ],
     workExperience: [
       {
-        position: 'AI Intern',
+        position: 'AI Engineer Intern',
         company: 'FPT Software',
         companyLink: 'https://fptsoftware.com/',
-        year: 'April 2025 - Present',
+        year: 'April 2025 - July 2025',
         description: 'Participated in the development and implementation of AI models, focusing on Computer Vision, for real-world projects.'
       },
       {
@@ -42,14 +42,23 @@ export default function Portfolio() {
         description: 'Analyze football matches in detail and annotate specific events (such as passes, shots, tackles, etc.) to create datasets for AI processing to produce technical statistics for the match and individual players.'
       }
     ],
+    licenses: [
+      {
+        title: 'Samsung Innovation Campus - Artificial Intelligence',
+        issue: 'Samsung Electronics, August 2024.',
+        image: 'img/licenses/samsung.jpg'
+      }
+    ],
     awards: [
       {
         title: 'The first prize in the 2nd programming competition on "Autonomous Vehicle with Image Processing and Artificial Intelligence"',
         issue: 'Ho Chi Minh City University of Technology and Education, February 2022.',
+        image: 'img/awards/xe-tu-hanh-2022.jpg'
       },
       {
         title: 'The final round of the 4th Artificial Intelligence (AI) Challenge Ho Chi Minh City 2023, theme: "Event Retrieval from Visual Data"',
         issue: 'The Center of Science and Technology Development for Youth, October 2023.',
+        image: 'img/awards/ai-challenge-2023.jpg'
       }
     ],
     // projects: [
@@ -79,14 +88,11 @@ export default function Portfolio() {
         <img src={useBaseUrl(profile.avatar)} alt={profile.name} className={styles.avatar} />
         <Heading as="h2">{profile.name}</Heading>
         <p>
-          AI Intern @{' '}
-          <a href="https://fpt.com.vn" target="_blank" rel="noopener noreferrer" className={styles.link}>
-            FPT Software
+          AI Engineer 
+          | AI Researcher @{' '}
+          <a href="https://www.linkedin.com/company/aima-research/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className={styles.link}>
+            AIMA Research Lab 
           </a>{' '}
-          | Student @{' '}
-          <a href="https://hcmute.edu.vn" target="_blank" rel="noopener noreferrer" className={styles.link}>
-            HCMUTE
-          </a>
         </p>
         <div className={styles.iconLinks}>
           {Object.entries(profile.contacts).map(([key, url]) => (
@@ -142,14 +148,40 @@ export default function Portfolio() {
           </ul>
         </div>
 
+        <div className={styles.section}>
+          <Heading as="h2">Licenses & Certifications</Heading>
+          <ul>
+            {profile.licenses.map((license, idx) => (
+              <li key={idx}>
+                <strong>{license.title}</strong><br />
+                Issued by {license.issue}
+                <div className={styles.licenseImage}>
+                <img
+                  src={useBaseUrl(license.image)}
+                  alt={`${license.title} certificate`}
+                  className={styles.certificate}
+                />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
 
         <div className={styles.section}>
-          <Heading as="h2">Awards</Heading>
+          <Heading as="h2">Honors & Awards</Heading>
           <ul>
             {profile.awards.map((award, idx) => (
               <li key={idx}>
                 <strong>{award.title}</strong><br />
                 Issued by {award.issue}
+                <div className={styles.awardImage}>
+                <img
+                  src={useBaseUrl(award.image)}
+                  alt={`${award.title} certificate`}
+                  className={styles.certificate}
+                />
+                </div>
               </li>
             ))}
           </ul>
