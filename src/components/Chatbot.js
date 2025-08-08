@@ -5,7 +5,7 @@ import '../css/chatbot.css';
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Xin lỗi! Tôi vẫn đang trong quá trình phát triển.' }
+    { sender: 'bot', text: 'Coming soon...' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef(null); // ref để scroll
@@ -17,7 +17,7 @@ export default function Chatbot() {
     setMessages(prev => [...prev, userMessage]);
 
     setTimeout(() => {
-      const botReply = { sender: 'bot', text: 'Xin lỗi! Tôi vẫn đang trong quá trình phát triển.' };
+      const botReply = { sender: 'bot', text: 'Coming soon...' };
       setMessages(prev => [...prev, botReply]);
     }, 0);
 

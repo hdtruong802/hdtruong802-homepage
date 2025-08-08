@@ -91,6 +91,7 @@ const config = {
         logo: {
           alt: 'My Site Logo',
           src: 'img/HDT_logo.jpg',
+          srcDark: 'img/HDT_logo_white.jpg',
         },
         items: [
           // {

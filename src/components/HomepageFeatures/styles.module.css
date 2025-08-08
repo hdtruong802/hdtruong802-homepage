@@ -21,7 +21,7 @@
   height: 300px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #ccc;
+  border: 3px solid var(--ifm-color-primary);
   margin-bottom: 20px;
 }
 
@@ -42,7 +42,25 @@
   color: var(--ifm-color-primary);
 }
 
+.licenseImage {
+  margin-top: 10px;
+  text-align: left;
+}
 
+.certificate {
+  max-width: 30%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.awardImage {
+  margin-top: 10px;
+  text-align: left;
+}
+
+
+  
 /* .featureSvg {
   width: 200px;
   height: 200px;
