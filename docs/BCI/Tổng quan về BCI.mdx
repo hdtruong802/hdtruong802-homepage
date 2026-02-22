@@ -1,0 +1,126 @@
+---
+sidebar_position: 2
+hide_title: true
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+<h1 align="center">Tổng quan về Brain-Computer Interfaces</h1>
+<h3 align="center"><a href={useBaseUrl('/#duc-truong-hoang')}>Duc-Truong Hoang</a></h3>
+
+## 1. Brain-Computer Interfaces là gì?
+
+<div align="center">
+<img src={useBaseUrl('img/BCI/BCI/Brain-Computer-Interfaces.jpeg')} alt="Overview" style={{ width: "50%" }} /><br />  
+<em>Hình 1: Minh họa Brain-Computer Interfaces</em>
+</div>
+
+**Brain-Computer Interfaces (BCI)**, hay Giao diện não - máy tính, là một hệ thống kết hợp giữa phần cứng và phần mềm, cho phép tín hiệu hoạt động của não bộ được chuyển trực tiếp thành lệnh điều khiển máy tính hoặc các thiết bị bên ngoài. Điều đặc biệt ở đây là quá trình này không cần thông qua hệ thần kinh ngoại biên hay các cơ quan vận động như tay, chân hay giọng nói.
+
+Ban đầu, BCI ra đời với một mục tiêu rất nhân văn: giúp những người khuyết tật có thể giao tiếp và tương tác với thế giới xung quanh, dù họ không còn khả năng cử động hay nói chuyện. Tuy nhiên, khi công nghệ phát triển, người ta dần nhận ra rằng bộ não con người là một "kiến trúc" cực kỳ phức tạp và giàu tiềm năng, còn rất nhiều điều chưa được khai phá.
+
+Việc nghiên cứu và phát triển BCI không chỉ dừng lại ở hỗ trợ y tế, mà còn mở ra một hướng tiếp cận hoàn toàn mới trong tương tác người - máy, trí tuệ nhân tạo, thực tế ảo, và thậm chí là cách chúng ta mở rộng năng lực nhận thức của chính mình. Có thể nói, BCI đang đặt những viên gạch đầu tiên cho một hệ sinh thái công nghệ mới, nơi ranh giới giữa con người và máy móc ngày càng trở nên mờ nhạt.
+
+## 2. Các bước cơ bản trong một hệ thống BCI
+
+- **Thu thập tín hiệu (Signal acquisition)**
+
+Đo hoạt động não bằng các phương pháp khác nhau, thường là điện não đồ (EEG), electrocorticography (ECoG), hoặc một số kỹ thuật khác.
+
+- **Tiền xử lý tín hiệu (Preprocessing)**
+
+Loại bỏ nhiễu và **artifact** để tăng chất lượng tín hiệu não thu được.
+
+Trong BCI, mục tiêu cốt lõi là đo được hoạt động điện của các neuron trong não. Tuy nhiên, trên thực tế, các điện cực đặt trên da đầu không chỉ "nghe" mỗi não bộ. Chúng còn thu nhận rất nhiều tín hiệu không mong muốn khác như chuyển động cơ thể, hoạt động cơ mặt, chớp mắt, hay thậm chí là nhiễu từ môi trường xung quanh.
+
+Những tín hiệu này không phản ánh ý định hay trạng thái thực sự của não, nhưng lại có biên độ lớn và dễ xuất hiện. Kết quả là chúng che lấp, làm méo hoặc lẫn vào tín hiệu não thật, khiến việc phân tích và giải mã trở nên khó khăn hơn. Trong lĩnh vực BCI, các tín hiệu "ngoài lề" như vậy được gọi chung là **artifact**, một trong những thách thức lớn nhất khi xử lý dữ liệu EEG và xây dựng hệ thống BCI đáng tin cậy.
+
+- **Trích xuất đặc trưng (Feature extraction)**
+
+Trích xuất các đặc trưng quan trọng từ tín hiệu để mô tả những ý định hoặc trạng thái của người dùng.
+
+- **Phân loại (Classification)**
+
+Sử dụng các thuật toán để dịch các đặc trưng thành lệnh hoặc dự đoán hành vi.
+
+- **Giao diện điều khiển (Control interface)**
+
+Lệnh được chuyển thành hành động trên máy tính hoặc thiết bị ngoại vi (ví dụ: con trỏ chuột, robot, cánh tay giả).
+
+## 3. Các phương pháp thu tín hiệu trong BCI
+
+### 3.1. Phương pháp điện sinh lý (Electrophysiological)
+
+### *3.1.1 EEG (Electroencephalography)*
+
+**EEG** là phương pháp phổ biến nhất trong BCI **không xâm lấn**, do có độ phân giải thời gian cao, chi phí thấp, dễ triển khai và an toàn cho người dùng. **EEG** được sử dụng rộng rãi trong cả nghiên cứu và ứng dụng thực tế của BCI.
+
+**EEG** ghi lại điện thế sinh ra từ hoạt động đồng bộ của các neuron vỏ não, thông qua **điện cực đặt trên da đầu** [(*Hình 2*)](#eeg). Tín hiệu điện này phải đi qua dịch não tủy, xương sọ và da đầu nên dễ bị nhiễu và suy giảm.
+
+<div align="center">
+<img id="eeg" src={useBaseUrl('img/BCI/BCI/sensors-12-01211f1.jpg')} alt="Overview" style={{ width: "60%" }} /><br />  
+<em>Hình 2: Đặt điện cực trên da đầu</em>
+</div>
+
+Tín hiệu **EEG** được phân tích theo các dải tần, mỗi dải liên quan tới trạng thái não khác nhau:
+- **Delta δ (dưới 4 Hz)**: Thường xuất hiện ở trẻ sơ sinh hoặc người lớn khi ngủ sâu. Nếu sóng Delta xuất hiện nhiều ở người trưởng thành lúc tỉnh táo, đó là dấu hiệu bất thường và có thể liên quan đến các bệnh thần kinh.
+- **Theta θ (4–7 Hz)**: Lượng sóng theta lớn thường được quan sát ở trẻ nhỏ, trẻ lớn hơn và người trưởng thành khi ở trạng thái buồn ngủ, thiền định hoặc đang ngủ. Tương tự sóng delta, phần lớn hoạt động theta ở người trưởng thành còn thức có liên quan đến bệnh thần kinh.
+- **Alpha α (8–12 Hz)**: Sóng alpha thường được ghi nhận ở vùng chẩm (occipital) của não bộ. Biên độ của sóng alpha tăng lên khi nhắm mắt và cơ thể thư giãn, và giảm xuống khi mở mắt hoặc khi thực hiện các hoạt động đòi hỏi tư duy.
+- **Beta β (12–30 Hz)**: Sóng beta xuất hiện chủ yếu ở vùng trán và trung tâm, liên quan đến hoạt động vận động. Khi không cử động, sóng beta có phân bố đối xứng, còn khi vận động hoặc tưởng tượng vận động, chúng bị giải đồng bộ, biên độ giảm và tính đối xứng thay đổi.
+- **Gamma γ (30-100 Hz)**: Sóng gamma liên quan đến hoạt động vận động, lực co cơ và quá trình cảm nhận thị giác và thính giác. Dù ít được dùng trong BCI dựa trên EEG do dễ nhiễu (EMG, EOG), sóng gamma đang được quan tâm nhiều hơn vì có tiềm năng tăng tốc độ truyền thông tin và độ đặc hiệu không gian so với alpha và beta.
+
+### *3.1.2. ECoG (Electrocorticography)*
+
+**ECoG** là phương pháp **bán xâm lấn**, trong đó **điện cực được đặt trực tiếp lên bề mặt vỏ não**, dưới hộp sọ.
+Phương pháp này thường được sử dụng trong nghiên cứu lâm sàng và nghiên cứu BCI hiệu năng cao.
+
+Do không phải đi qua xương sọ và da đầu, tín hiệu **ECoG** có độ phân giải thời gian, không gian cao hơn và biên độ lớn hơn **EEG**, đồng thời ít bị ảnh hưởng bởi nhiễu như chớp mắt hay chuyển động mắt.
+
+Tuy nhiên, **ECoG** là phương pháp đòi hỏi phải mở hộp sọ (craniotomy) để cấy lưới điện cực, tiềm ẩn nguy cơ sức khỏe đáng kể. Vì lý do này, các nghiên cứu **ECoG** ban đầu chủ yếu được thực hiện trên động vật.
+
+### *3.1.3. Intracortical Neuron Recording*
+
+**Ghi nhận neuron nội vỏ (intracortical neuron recording)** là một kỹ thuật dùng để đo hoạt động điện thế bên trong chất xám của não. 
+Đây là phương pháp **xâm lấn hoàn toàn**, yêu cầu **cấy các mảng vi điện cực trực tiếp vào vỏ não** nhằm thu tín hiệu spike và điện thế trường cục bộ từ các neuron.
+
+Từ **ghi nhận neuron nội vỏ**, có thể thu được ba loại tín hiệu chính:
+- **SUA (Single-Unit Activity):** hoạt động của một neuron đơn lẻ, được tách ra bằng cách lọc thông cao (trên 300 Hz).
+- **MUA (Multi-Unit Activity):** tương tự SUA nhưng tín hiệu có thể đến từ nhiều neuron.
+- **LFP (Local Field Potentials):** là tín hiệu liên tục (analog) được trích xuất bằng lọc thông thấp (dưới 300 Hz), phản ánh hoạt động tổng hợp của các neuron xung quanh đầu điện cực.
+
+So với **EEG**, **ghi nhận neuron nội vỏ** cung cấp độ phân giải không gian và thời gian cao hơn rất nhiều, do đó tín hiệu thu được dễ khai thác hơn.
+Tuy nhiên, phương pháp này gặp hạn chế bởi rủi ro y tế cao, tuổi thọ điện cực hạn chế và vấn đề về đạo đức cũng như an toàn sinh học.
+
+### 3.2. Phương pháp từ sinh học (Neuromagnetic)
+
+### *MEG (Magnetoencephalography)*
+**MEG** là kỹ thuật ghi não **không xâm lấn**, đo hoạt động **từ trường do các dòng điện thần kinh tạo ra**, với độ phân giải không gian, thời gian cao hơn **EEG** và ít bị ảnh hưởng bởi hộp sọ.
+**MEG** giúp giảm thời gian huấn luyện và tăng độ chính xác trong BCI, đồng thời có khả năng định vị vùng não hoạt động. Tuy nhiên, do thiết bị cồng kềnh, đắt đỏ và yêu cầu che chắn đặc biệt, **MEG** ít được dùng trong BCI và hiện vẫn ở giai đoạn phát triển sớm so với **EEG**.
+
+### 3.3. Phương pháp dựa trên lưu lượng máu (Hemodynamic)
+
+### *3.3.1. fMRI (Functional Magnetic Resonance Imaging)*
+
+**fMRI** là phương pháp **không xâm lấn**, dùng để phát hiện sự thay đổi cục bộ về thể tích máu não, lưu lượng máu và mức độ oxy hóa trong quá trình neuron hoạt động, thông qua các trường điện từ.
+Trong các hệ BCI, **fMRI** thường được sử dụng để đo tín hiệu BOLD (Blood Oxygen Level Dependent) trong quá trình neuron kích hoạt.
+
+Tuy nhiên, **fMRI** lại có độ phân giải thời gian thấp, khoảng 1-2 giây, và thêm vào đó, phản ứng huyết động còn gây ra độ trễ sinh lý từ 3-6 giây. Do đó, **fMRI** không phù hợp cho giao tiếp nhanh trong các hệ BCI và rất dễ bị ảnh hưởng bởi nhiễu do chuyển động đầu.
+
+### *3.3.2. NIRS (Near Infrared Spectroscopy)*
+
+**NIRS** là phương pháp **không xâm lấn**, sử dụng ánh sáng hồng ngoại để theo dõi các dao động trong chuyển hóa não trong quá trình hoạt động thần kinh, nhưng chỉ đo được lớp vỏ não ngoài.
+Ánh sáng hồng ngoại có thể xuyên qua hộp sọ với độ sâu khoảng 1-3 cm, và cường độ ánh sáng suy giảm cho phép đo sự thay đổi nồng độ oxyhemoglobin và deoxyhemoglobin.
+
+**NIRS** có chi phí thấp, tính di động cao và độ phân giải thời gian khá tốt (~100 ms), song độ phân giải không gian thấp và bị trễ do phản ứng huyết động.
+Mặc dù vậy, **NIRS** vẫn được xem là phương án tiềm năng cho BCI và là lựa chọn thay thế **EEG** trong tương lai vì không cần gel hay điện cực dẫn điện.
+
+{/* ## 4. Các tín hiệu điều khiển dùng trong BCI */}
+
+
+
+<p align="right"><em>Latest update: 14/12/2025</em></p>
+
+***
+## Tài liệu tham khảo
+<div id="1">
+[**[1]** &nbsp;Luis Fernando Nicolas-Alonso, Jaime Gomez-Gil (2012). **Brain Computer Interfaces, a Review**. *Multidisciplinary Digital Publishing Institute (MDPI)*.](https://www.mdpi.com/1424-8220/12/2/1211_2)
+</div>

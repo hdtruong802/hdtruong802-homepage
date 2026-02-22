@@ -8,12 +8,12 @@ export default function Portfolio() {
   const profile = {
     name: 'Duc-Truong Hoang',
     avatar: '/img/HDT.jpg',
-    about: "I'm passionate about Artificial Intelligence (AI), Computer Vision, and Deep Learning. With this passion, I aspire to pursue a research career in AI. My goal is to contribute to the development of cutting-edge technologies, solve complex challenges, and create meaningful AI applications for the future.",
+    about: "I am deeply passionate about Artificial Intelligence (AI) and Deep Learning, with a strong interest in developing intelligent systems that can understand and interpret complex data. My goal is to pursue a research-oriented career focused on advancing machine learning methods and their real-world applications. Through this work, I aspire to contribute to innovative AI solutions, address fundamental challenges in data-driven modeling, and create technologies that deliver meaningful impact.",
     education: [
       {
-        degree: 'Bachelor of Electronics and Telecommunications Engineering Technology',
+        degree: 'Bachelor of Engineering, Electronics and Communications Engineering Technology',
         year: '2020 - 2025',
-        school: 'Ho Chi Minh City University of Technology and Education (HCMUTE)',
+        school: 'Ho Chi Minh City University of Technology and Engineering (HCMUTE)',
         schoolLink: 'https://hcmute.edu.vn',
         descriptions: [
           <span key="1">Reasearch Assistant at UTE-AI Lab</span>,
@@ -32,14 +32,14 @@ export default function Portfolio() {
         company: 'FPT Software',
         companyLink: 'https://fptsoftware.com/',
         year: 'April 2025 - July 2025',
-        description: 'Participated in the development and implementation of AI models, focusing on Computer Vision, for real-world projects.'
+        description: 'Worked as part of a cross-functional engineering team, contributing to the design and development ofseveral Proof-of-Concept (POC) solutions for real-world enterprise projects, particularly focused on in-store computer vision applications.'
       },
       {
-        position: 'Football Analyst',
+        position: 'Football Analyst - Data Annotation',
         company: 'BEPRO',
         companyLink: 'https://www.bepro.ai/',
         year: 'September 2024 - March 2025',
-        description: 'Analyze football matches in detail and annotate specific events (such as passes, shots, tackles, etc.) to create datasets for AI processing to produce technical statistics for the match and individual players.'
+        description: 'Analyzed match situations from football video footage, identifying key events such as passes, shots, goals, fouls, and tactical movements. Annotated and structured large-scale datasets to enable AI models to accurately extract and evaluate player and team performance metrics.',
       }
     ],
     licenses: [
@@ -51,12 +51,12 @@ export default function Portfolio() {
     ],
     awards: [
       {
-        title: 'The first prize in the 2nd programming competition on "Autonomous Vehicle with Image Processing and Artificial Intelligence"',
+        title: <>1<sup>st</sup> Place - Programming Competition on Autonomous Vehicle with Image Processing and Artificial Intelligence</>,
         issue: 'Ho Chi Minh City University of Technology and Education, February 2022.',
         image: 'img/awards/xe-tu-hanh-2022.jpg'
       },
       {
-        title: 'The final round of the 4th Artificial Intelligence (AI) Challenge Ho Chi Minh City 2023, theme: "Event Retrieval from Visual Data"',
+        title: 'Finalist - AI Challenge Ho Chi Minh City, theme: "Event Retrieval from Visual Data"',
         issue: 'The Center of Science and Technology Development for Youth, October 2023.',
         image: 'img/awards/ai-challenge-2023.jpg'
       }
@@ -89,10 +89,11 @@ export default function Portfolio() {
         <Heading as="h2">{profile.name}</Heading>
         <p>
           AI Engineer 
-          | AI Researcher @{' '}
+          | AI Researcher 
+          {/* @{' '}
           <a href="https://www.linkedin.com/company/aima-research/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className={styles.link}>
             AIMA Research Lab 
-          </a>{' '}
+          </a>{' '} */}
         </p>
         <div className={styles.iconLinks}>
           {Object.entries(profile.contacts).map(([key, url]) => (

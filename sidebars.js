@@ -10,6 +10,14 @@ const sidebars = {
 
     {
       type: 'category',
+      label: 'Brain-Computer Interfaces',
+      items: [
+        'BCI/Tổng quan về BCI',
+      ],
+    },
+
+    {
+      type: 'category',
       label: 'Computer Vision',
       items: [
         'Computer Vision/Gaze Estimation',
